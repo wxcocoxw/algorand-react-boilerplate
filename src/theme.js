@@ -149,10 +149,10 @@ const theme = extendTheme({
       },
       variants: {
         solid: (props) => ({
-          bg: props.colorMode === 'light' ? 'primary.100' : 'teal.900',
+          bg: props.colorMode === 'light' ? 'purple.400' : 'purple.600',
           color: colors.gray[50],
           _hover: {
-            bg: props.colorMode === 'light' ? 'primary.200' : 'primary.200',
+            bg: props.colorMode === 'light' ? 'purple.200' : 'purple.400',
           },
           borderRadius: 'md',
         }),

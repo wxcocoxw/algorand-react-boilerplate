@@ -1,5 +1,5 @@
-import React from 'react';
 import { Box, Button, Center, Text } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
 
 const Cover = ({ onConnect }) => {
   return (
@@ -15,14 +15,23 @@ const Cover = ({ onConnect }) => {
     >
       <Center width="100%" height="100%">
         <Box textAlign="center">
-          <Text fontSize="2xl" marginBottom={4}>
+          <Text fontSize="2xl" marginBottom={4} color={'white'}>
             Connect Your Wallet
           </Text>
-          <Button onClick={onConnect}>Connect</Button>
+          <Button 
+            onClick={onConnect}
+            variant="solid"
+          >
+            Connect
+          </Button>
         </Box>
       </Center>
     </Box>
   );
+};
+
+Cover.propTypes = {
+  onConnect: PropTypes.func.isRequired,
 };
 
 export default Cover;

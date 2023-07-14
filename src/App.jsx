@@ -14,42 +14,35 @@ import {
 } from '@chakra-ui/react';
 import { CopyIcon } from '@chakra-ui/icons';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import theme from './theme';
 import Cover from './components/Cover';
 import WalletConnector from './components/WalletConnector';
-import {
-  reconnectProviders,
-  WalletProvider,
-  PROVIDER_ID,
-  pera,
-  defly,
-  useWallet,
-} from '@txnlab/use-wallet';
+import { WalletProvider, useInitializeProviders, PROVIDER_ID, useWallet } from '@txnlab/use-wallet'
+import { DeflyWalletConnect } from '@blockshake/defly-connect'
+import { PeraWalletConnect } from '@perawallet/connect'
 import { getNFD } from './helpers/getNFD';
-
-const walletProviders = {
-  [PROVIDER_ID.DEFLY]: defly.init({
-    clientOptions: {
-      shouldShowSignTxnToast: true,
-    },
-  }),
-  [PROVIDER_ID.PERA]: pera.init({
-    clientOptions: {
-      shouldShowSignTxnToast: true,
-    },
-  }),
-};
+import algosdk from 'algosdk';
 
 function App() {
+   const providers = useInitializeProviders({
+       providers: [
+         { id: PROVIDER_ID.PERA, clientStatic: PeraWalletConnect },
+         { id: PROVIDER_ID.DEFLY, clientStatic: DeflyWalletConnect },
+       ],
+       nodeConfig: {
+        network: 'mainnet',
+        nodeServer: 'https://mainnet-api.algonode.cloud',
+        nodeToken: '',
+        nodePort: '443'
+      },
+      algosdkStatic: algosdk
+     })
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { activeAccount, isReady } = useWallet();
   const [nfdName, setNfdName] = useState('');
   const toast = useToast();
-
-  useEffect(() => {
-    reconnectProviders(walletProviders);
-  }, []);
 
   useEffect(() => {
     if (activeAccount && isReady) {
@@ -82,7 +75,7 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      <WalletProvider value={walletProviders}>
+      <WalletProvider value={providers}>
         <Container maxW="container.xl">
           <Box>
             <Stack

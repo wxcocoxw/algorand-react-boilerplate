@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Heading,
   Button,
@@ -15,6 +14,8 @@ import {
 } from '@chakra-ui/react';
 import { useWallet } from '@txnlab/use-wallet';
 import { truncateAddress } from '../helpers/conversions';
+import { Divider } from '@chakra-ui/layout';
+import PropTypes from 'prop-types';
 
 const WalletConnector = ({ isOpen, onClose }) => {
   const { providers, activeAccount } = useWallet();
@@ -25,16 +26,16 @@ const WalletConnector = ({ isOpen, onClose }) => {
       onClose={onClose}
       alignItems="center"
       justifyContent="center"
-      size="lg"
+      size="xl"
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent p={4}>
         <ModalHeader>Connect Wallet</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Stack spacing={4} direction="row" align={'stretch'} justify={'space-around'}>
               {providers?.map(provider => (
-                <Stack key={'provider-' + provider.metadata.id} direction={'column'} align={'center'} justify={'stretch'}>
+                <Stack key={'provider-' + provider.metadata.id} direction={'column'} align={'center'} justify={'stretch'} spacing={4}>
                   <Heading as="h4" size="md" textAlign={'center'}>
                     {provider.metadata.name}
                   </Heading>
@@ -43,6 +44,7 @@ const WalletConnector = ({ isOpen, onClose }) => {
                   </Badge>
                   <Image
                       maxWidth={100}
+                      maxHeight={100}
                       objectFit={'cover'}
                       alt={provider.metadata.name}
                       src={provider.metadata.icon}
@@ -56,6 +58,7 @@ const WalletConnector = ({ isOpen, onClose }) => {
                     >
                       Connect
                     </Button>
+                    <Divider />
                     <Button
                       onClick={provider.disconnect}
                       disabled={!provider.isConnected}
@@ -63,6 +66,7 @@ const WalletConnector = ({ isOpen, onClose }) => {
                     >
                       Disconnect
                     </Button>
+                    <Divider />
                     <Button
                       onClick={provider.setActiveProvider}
                       disabled={!provider.isConnected || provider.isActive}
@@ -71,7 +75,7 @@ const WalletConnector = ({ isOpen, onClose }) => {
                     >
                       Set Active
                     </Button>
-
+                    <Divider />
                     <Stack>
                       {provider.isActive && provider.accounts.length && (
                         <Select
@@ -99,6 +103,11 @@ const WalletConnector = ({ isOpen, onClose }) => {
       </ModalContent>
     </Modal>
   );
+};
+
+WalletConnector.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default WalletConnector;
