@@ -1,13 +1,10 @@
 import algosdk from 'algosdk';
-
-const baseServer = process.env.REACT_APP_ALGOD_SERVER;
-const port = '443';
-const token = ''
+import { ALGOD_SERVER, ALGOD_TOKEN, ALGOD_PORT } from '../config/const';
 
 export const algodClient = new algosdk.Algodv2(
-    token,
-    baseServer,
-    port
+    ALGOD_TOKEN,
+    ALGOD_SERVER,
+    ALGOD_PORT
   );
 
 export const assetTransfer = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject;
