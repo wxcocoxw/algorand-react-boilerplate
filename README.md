@@ -27,7 +27,7 @@ Ensure you have the following installed on your system:
    
     `cd algorand-react-boilerplate`
 
-1. Install the dependencies:
+3. Install the dependencies:
     
     Using npm:
     `npm install`
@@ -35,7 +35,9 @@ Ensure you have the following installed on your system:
     Using Yarn:
     `yarn`
 
-2. Start the development server:
+4. Configure your environment variables & rename sample.env
+
+5. Start the development server:
 
     Using npm:
     `npm run dev`
